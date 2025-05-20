@@ -1,7 +1,7 @@
 export const API_BASE_URL = 'http://localhost:9001/api/v1';
 
 export const CURRENCY_INR = 'INR';
-export const RAZORPAY_KEY = 'rzp_test_ywyz4ysWARCE4u';
+export const RAZORPAY_KEY = ''; //DEFINE RAZ_PAY KEY
 export const COMPANY_NAME = 'Xyz Solutions';
 export const PAYMENT_DESC = 'Payment for career related service';
 
