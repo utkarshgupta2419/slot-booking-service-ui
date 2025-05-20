@@ -1,0 +1,86 @@
+.container {
+    width: 60%;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #f9f9f9;
+    border-radius: 10px;
+}
+
+.title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.stepContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.step {
+    text-align: center;
+    flex: 1;
+    opacity: 0.5;
+}
+
+.step.active {
+    font-weight: bold;
+    color: green;
+    opacity: 1;
+}
+
+.step span {
+    display: inline-block;
+    margin-bottom: 0.3rem;
+    font-size: 1rem;
+    background-color: #ddd;
+    padding: 0.5rem;
+    border-radius: 50%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.field {
+    margin-bottom: 1rem;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+
+.field input,
+.field textarea {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.backBtn,
+.nextBtn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.backBtn {
+    background-color: #e0e0e0;
+}
+
+.nextBtn {
+    background-color: #d32f2f;
+    color: white;
+}
