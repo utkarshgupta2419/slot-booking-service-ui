@@ -33,24 +33,26 @@ const Dashboard = () => {
                 <h2>Dashboard</h2>
                 <button className={styles.bookButton} onClick={handleBookSlot}>Book a Slot</button>
             </div>
-
-            <div className={styles.section}>
-                <h3>Upcoming Bookings</h3>
-                {bookings.length === 0 ? (
-                    <p>No upcoming slots found.</p>
-                ) : (
-                    <ul className={styles.bookingList}>
-                        {bookings.map((booking, index) => (
-                            <li key={index} className={styles.bookingItem}>
-                                <strong>{booking.date}</strong> at <strong>{booking.time}</strong>
-                                <div>Target Role: {booking?.targetRole}</div>
-                                <div>Note: {booking?.additionalNote}</div>
-                                <div>Service: {booking?.selectedService}</div>
-                            </li>
-                        ))}
-                    </ul>
-                )}
+            <div>
+                <div className={styles.section}>
+                    <h3>Upcoming Bookings</h3>
+                    {bookings.length === 0 ? (
+                        <p>No upcoming slots found.</p>
+                    ) : (
+                        <ul className={styles.bookingList}>
+                            {bookings.map((booking, index) => (
+                                <li key={index} className={styles.bookingItem}>
+                                    <strong>{booking.date}</strong> at <strong>{booking.time}</strong>
+                                    <div>Target Role: {booking?.targetRole}</div>
+                                    <div>Note: {booking?.additionalNote}</div>
+                                    <div>Service: {booking?.selectedService}</div>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
             </div>
+
         </div>
     );
 };

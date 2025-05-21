@@ -54,8 +54,20 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    max-height: 400px; /* Set a reasonable max height */
+    overflow-y: auto;   /* Enable vertical scrolling */
+    padding-right: 0.5rem; /* Optional: space for scrollbar */
 }
 
+/* Optional: Make scrollbar look better (Webkit browsers) */
+.bookingList::-webkit-scrollbar {
+    width: 8px;
+}
+
+.bookingList::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
 .bookingItem {
     border: 1px solid #ddd;
     padding: 1rem;
