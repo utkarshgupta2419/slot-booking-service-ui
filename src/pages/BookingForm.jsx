@@ -373,7 +373,7 @@ const BookingForm = () => {
                         <button
                             type="button"
                             onClick={handleGoToDashboard}
-                            className={styles.goToDashboardBtn} // You might want to define this style
+                            className={styles.goToDashboardBtn}
                         >
                             Go to Dashboard
                         </button>
