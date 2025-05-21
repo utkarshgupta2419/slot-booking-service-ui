@@ -24,6 +24,10 @@ const Login = () => {
         clearLocalStorage();
     }
 
+    function handleDashboardRedirect() {
+        navigate(ROUTES.DASHBOARD);
+    };
+
     const handleLogin = (e) => {
         e.preventDefault();
         const {elements} = e.target;
@@ -36,7 +40,7 @@ const Login = () => {
         login(reqBody).then(res => {
             console.log("Login Successful. Redirecting to Dashboard.")
             storeUserInfo(res?.data);
-            navigate(ROUTES.DASHBOARD);
+            handleDashboardRedirect();
         }).catch(err => {
             toast.error("Login Attempt failed.")
         });

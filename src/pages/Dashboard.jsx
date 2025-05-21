@@ -14,8 +14,7 @@ const Dashboard = () => {
     }, []);
 
     const fetchBookings = () => {
-        const email = getLocalStorageItem("email");
-        getBookingsByEmail(email).then(res => {
+        const email = getLocalStorageItem("email");        getBookingsByEmail(email).then(res => {
             const bookings = res?.data;
             setBookings(bookings);
         }).catch(err => {

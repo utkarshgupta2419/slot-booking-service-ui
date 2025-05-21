@@ -17,3 +17,17 @@ export const getBookingsByEmail = (email) => {
 export const createBookingByEmail = (reqBody) => {
     return axiosInstance.post('', reqBody);
 }
+
+axiosInstance.interceptors.request.use(
+    (config) => {
+        const token = getLocalStorageItem('token');
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        // Do something with request error
+        return Promise.reject(error);
+    }
+);

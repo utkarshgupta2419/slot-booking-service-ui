@@ -40,6 +40,23 @@ const BookingForm = () => {
     const [isNextDisabled, setIsNextDisabled] = useState(true);
     const [razorpayLoaded, setRazorpayLoaded] = useState(false);
     const [bookingResponse, setBookingResponse] = useState({});
+
+    const initialFormData = {
+        fullName: getLocalStorageItem('fullName'),
+        email: getLocalStorageItem('email'),
+        phone: getLocalStorageItem('phone'),
+        resumeLink: '',
+        targetRole: '',
+        notes: '',
+        serviceType: '',
+        amount: '',
+        appointmentDate: null,
+        appointmentTime: '',
+        orderId: null,
+        paymentSuccess: false,
+        paymentError: null,
+    };
+
     useEffect(() => {
         if (step === 1) {
             setIsNextDisabled(!formData.serviceType);
@@ -52,13 +69,13 @@ const BookingForm = () => {
 
     const loadRazorpayScript = () => {
         return new Promise((resolve) => {
-          const script = document.createElement('script');
-          script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-          script.onload = () => resolve(true);
-          script.onerror = () => resolve(false);
-          document.body.appendChild(script);
+            const script = document.createElement('script');
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+            script.onload = () => resolve(true);
+            script.onerror = () => resolve(false);
+            document.body.appendChild(script);
         });
-      };
+    };
 
     const createRazorpayOrder = async (e) => {
         e.preventDefault();
@@ -75,55 +92,55 @@ const BookingForm = () => {
         }
         generateOrderId(reqBody).then((res) => {
             console.log(res);
-        const options = {
-            key: RAZORPAY_KEY,
-            order_id: res?.data?.orderId,
-            amount: res?.data?.amount,
-            currency: res?.data?.currency,
-            name: COMPANY_NAME,
-            description: PAYMENT_DESC,
-            handler: function (response) {
-              verifyPayment({
-                "orderId": response?.razorpay_order_id,
-                "paymentId": response?.razorpay_payment_id,
-                "signature": response?.razorpay_signature
-              }).then ((res) => {
-                createBookingByEmail({
-                    "userName": formData?.fullName,
-                    "userEmail": formData?.email,
-                    "phoneNumber": formData?.phone,
-                    "resumeLink": formData?.resumeLink,
-                    "targetRole": formData?.targetRole,
-                    "additionalNote": formData?.additionalNote,
-                    "selectedService": formData?.serviceType,
-                    "date": dateFormatter(formData?.appointmentDate),
-                    "time": TimeToFormattedTimeEnum[formData?.appointmentTime],
-                    "paymentId": response?.razorpay_payment_id
-                }).then ((res) => {
-                    setBookingResponse(res?.data);
-                    console.log("Payment verified and order created...")
-                    setStep(5);
-                }).catch((err) => {
-                    console.log(err);
-                    toast.error('Could not create booking.');
-                })
-              }).catch((err) => {
-                console.log(err);
-                  toast.error('Payment verification failed');
-              })
-            },
-            prefill: {
-                name: formData?.fullName,
-                email: formData?.email,
-                contact: formData?.phone,
-            },
-            theme: {
-              color: '#3399cc',
-            },
-          };
-  
-          const rzp = new window.Razorpay(options);
-          rzp.open();
+            const options = {
+                key: RAZORPAY_KEY,
+                order_id: res?.data?.orderId,
+                amount: res?.data?.amount,
+                currency: res?.data?.currency,
+                name: COMPANY_NAME,
+                description: PAYMENT_DESC,
+                handler: function (response) {
+                    verifyPayment({
+                        "orderId": response?.razorpay_order_id,
+                        "paymentId": response?.razorpay_payment_id,
+                        "signature": response?.razorpay_signature
+                    }).then ((res) => {
+                        createBookingByEmail({
+                            "userName": formData?.fullName,
+                            "userEmail": formData?.email,
+                            "phoneNumber": formData?.phone,
+                            "resumeLink": formData?.resumeLink,
+                            "targetRole": formData?.targetRole,
+                            "additionalNote": formData?.additionalNote,
+                            "selectedService": formData?.serviceType,
+                            "date": dateFormatter(formData?.appointmentDate),
+                            "time": TimeToFormattedTimeEnum[formData?.appointmentTime],
+                            "paymentId": response?.razorpay_payment_id
+                        }).then ((res) => {
+                            setBookingResponse(res?.data);
+                            console.log("Payment verified and order created...")
+                            setStep(5);
+                        }).catch((err) => {
+                            console.log(err);
+                            toast.error('Could not create booking.');
+                        })
+                    }).catch((err) => {
+                        console.log(err);
+                        toast.error('Payment verification failed');
+                    })
+                },
+                prefill: {
+                    name: formData?.fullName,
+                    email: formData?.email,
+                    contact: formData?.phone,
+                },
+                theme: {
+                    color: '#3399cc',
+                },
+            };
+
+            const rzp = new window.Razorpay(options);
+            rzp.open();
         }).catch((error)=> {
             console.log(error);
             toast.error('Could not create payment order');
@@ -157,9 +174,13 @@ const BookingForm = () => {
     };
 
     const handleGoToDashboard = () => {
+        setFormData(initialFormData);
+        setStep(1);
         navigate('/dashboard');
     }
+
     const handleBookNewSlot = () => {
+        setFormData(initialFormData);
         setStep(1);
         navigate('/booking-form');
     }
@@ -346,8 +367,17 @@ const BookingForm = () => {
                         className={styles.nextBtn}
                         disabled={isNextDisabled}
                     >
-                         Continue →
+                        Continue →
                     </button>}
+                    {step !== 5 && (
+                        <button
+                            type="button"
+                            onClick={handleGoToDashboard}
+                            className={styles.goToDashboardBtn} // You might want to define this style
+                        >
+                            Go to Dashboard
+                        </button>
+                    )}
                 </div>
             </form>
         </div>
